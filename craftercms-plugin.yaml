@@ -6,8 +6,8 @@ descriptorVersion: 2
 # Describe the plugin
 plugin:
   type: site
-  id: org.rd.plugin.cannedseach
-  name: Studio Canned Seach Plugin
+  id: org.rd.plugin.cannedsearch
+  name: Studio Canned Search Plugin
   tags:
     - workflow
   version:
