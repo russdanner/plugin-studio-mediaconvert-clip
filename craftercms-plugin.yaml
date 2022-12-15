@@ -13,7 +13,7 @@ plugin:
   version:
     major: 1
     minor: 0
-    patch: 0
+    patch: 1
   description: A plugin to provide a quick link from the sidebar to pre-configured searches 
   documentation: "https://raw.githubusercontent.com/russdanner/plugin-studio-cannedsearch/master/README.md"
   website:
