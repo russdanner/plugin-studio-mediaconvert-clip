@@ -1,0 +1,75 @@
+# This file describes a plugin for use in CrafterCMS
+
+# The version of the format for this file
+descriptorVersion: 2
+
+# Describe the plugin
+plugin:
+  type: site
+  id: org.rd.plugin.cannedseach
+  name: Studio Canned Seach Plugin
+  tags:
+    - workflow
+  version:
+    major: 1
+    minor: 0
+    patch: 0
+  description: A plugin to provide a quick link from the sidebar to pre-configured searches 
+  documentation: "https://raw.githubusercontent.com/russdanner/plugin-studio-cannedsearch/master/README.md"
+  website:
+    name: Studio Canned Seach Plugin
+    url: https://github.com/russdanner/plugin-studio-cannedsearch
+  media:
+    screenshots:
+      - title: CrafterCMS
+        description: Studio Canned Seach
+        url: "https://raw.githubusercontent.com/russdanner/plugin-studio-cannedsearch/master/.crafter/logo.png"
+  developer:
+    company:
+      name: Russ Danner
+      email: russdanner@craftercms.com
+      url: https://github.com/russdanner
+  build:
+    id: cafebabe31300712202212a87901d0b02716c9
+    date: 2022-12-13T00:00:00Z
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  crafterCmsVersions:
+    - major: 4
+      minor: 0
+      patch: 0
+    - major: 4
+      minor: 0
+      patch: 1
+    - major: 4
+      minor: 0
+      patch: 2
+    - major: 4
+      minor: 0
+      patch: 3
+  crafterCmsEditions:
+    - community
+    - enterprise
+  installation:
+    - type: preview-app
+      elementXpath: //widget[@id='org.rd.plugin.cannedsearch.openSearchButton']
+      parentXpath: //widget[@id='craftercms.components.ToolsPanel']/configuration/widgets
+      element:
+        name: widget
+        attributes:
+          - name: id
+            value: org.rd.plugin.cannedsearch.openSearchButton
+        children:
+          - name: plugin
+            attributes:
+              - name: id
+                value: org.rd.plugin.cannedsearch
+              - name: site
+                value: "{site}"
+              - name: type
+                value: apps
+              - name: name
+                value: cannedsearch
+              - name: file
+                value: index.js
