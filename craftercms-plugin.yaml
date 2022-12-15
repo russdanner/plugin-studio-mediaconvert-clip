@@ -17,12 +17,12 @@ plugin:
   description: A plugin to provide a quick link from the sidebar to pre-configured searches 
   documentation: "https://raw.githubusercontent.com/russdanner/plugin-studio-cannedsearch/master/README.md"
   website:
-    name: Studio Canned Seach Plugin
+    name: Studio Canned Search Plugin
     url: https://github.com/russdanner/plugin-studio-cannedsearch
   media:
     screenshots:
       - title: CrafterCMS
-        description: Studio Canned Seach
+        description: Studio Canned Search
         url: "https://raw.githubusercontent.com/russdanner/plugin-studio-cannedsearch/master/.crafter/logo.png"
   developer:
     company:
