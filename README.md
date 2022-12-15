@@ -1,5 +1,6 @@
-# Canned Search Crafter Studio 
+# Canned Search for Crafter Studio 
 - Add as many pre-configured search short cuts to your sidebar as you like
+  - Configure the icon, title, visibility roles and search presets for each shortcut
 
 # Installation
 
