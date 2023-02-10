@@ -22,3 +22,48 @@ Modify ui.xml: `config/studio/ui.xml` to contain one or more Canned Search widge
                </configuration>
             </widget>
 ```
+
+Alternatively you may open a canned search in a dialog. This appraoch uses a slightly different configutation.
+```
+<openInNewBrowserTab>false</openInNewBrowserTab>
+<initialParameters>...</initialParameters>
+```
+Initial search params has the following structure:
+```
+{
+  query: '',
+  keywords: '',
+  offset: 0,
+  limit: 21,
+  sortBy: '_score',
+  sortOrder: 'desc',
+  filters: {}
+}
+```
+For example:
+```
+            <widget id="org.rd.plugin.cannedsearch.openSearchButton">
+               <plugin id="org.rd.plugin.cannedsearch"
+                       site="{site}"
+                       type="apps"
+                       name="cannedsearch"
+                       file="index.js"/>
+                <configuration>
+                  <openInNewBrowserTab>false</openInNewBrowserTab>
+
+                  <initialParameters>
+                      <path>/scripts/.+</path>
+                      <sortBy>internalName</sortBy>
+                      <sortOrder>asc</sortOrder>
+                      <filters>
+                          <mime-type>text/x-groovy</mime-type>
+                          <size>
+                              <min>1024</min>
+                              <max>25600</max>
+                          </size>
+                      </filters>
+                  </initialParameters>
+
+               </configuration>  
+            </widget>
+```
