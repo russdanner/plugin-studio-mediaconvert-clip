@@ -9,13 +9,12 @@ export function OpenSearchDialogButton(props) {
   const searchIcon = props.icon && props.icon.id ? props.icon.id : '@mui/icons-material/SavedSearchRounded';
   const searchQs = props.searchParams ? props.searchParams : '';
 
+  const openInNewBrowserTab = props.openInNewBrowserTab ? props.openInNewBrowserTab : true;
   const [searchParams, setSearchParams] = useState();
-
-
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
-    setSearchParams(searchQs)
+    setSearchParams(searchQs);
   }, []);
 
   return (
@@ -23,22 +22,36 @@ export function OpenSearchDialogButton(props) {
       icon={{ id: searchIcon }}
       title={searchLabel}
       onClick={() => {
-        var urlRoot = window.location.protocol + '//' + window.location.host
-        
-        // if( window.location.port != "80" 
-        // &&  window.location.port != "443") {
-        //    urlRoot += ":"+window.location.port
-        // }
+        if (openInNewBrowserTab === "true") {
+          var urlRoot = window.location.protocol + '//' + window.location.host;
 
-        var windowUrl = urlRoot+'/studio/search#/'
+          var windowUrl = urlRoot + '/studio/search#/';
 
-        if(searchParams != '') {
-          windowUrl += "?" + searchParams
+          if (searchParams != '') {
+            windowUrl += '?' + searchParams;
+          }
+          window.open(windowUrl, '_studioSearch');
+        } else {
+          const openInNewBrowserTab = props.openInNewBrowserTab ? props.openInNewBrowserTab : true;
+          let initialParams = props.initialParameters;
+             
+          dispatch(
+            showWidgetDialog({
+              id: 'CannedSearchDialog',
+              title: searchLabel,
+              widget: {
+                id: 'craftercms.components.Search',
+                configuration: {
+                  embedded: true,
+                  initialParameters: initialParams
+                }
+              }
+            })
+          );
         }
-
-        window.open(windowUrl, "_studioSearch")
-      }
-  }/>)
+      }}
+    />
+  );
 }
 
 export default OpenSearchDialogButton;
