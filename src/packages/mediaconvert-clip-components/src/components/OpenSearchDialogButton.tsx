@@ -5,8 +5,8 @@ import { showWidgetDialog } from '@craftercms/studio-ui/state/actions/dialogs';
 import { useDispatch } from 'react-redux';
 
 export function OpenSearchDialogButton(props) {
-  const searchLabel = props.title ? props.title : 'Search';
-  const searchIcon = props.icon && props.icon.id ? props.icon.id : '@mui/icons-material/SavedSearchRounded';
+  const searchLabel = props.title ? props.title : 'Clip Videos';
+  const searchIcon = props.icon && props.icon.id ? props.icon.id : '@mui/icons-material/ContentCutRounded';
   const searchQs = props.searchParams ? props.searchParams : '';
 
   const openInNewBrowserTab = props.openInNewBrowserTab ? props.openInNewBrowserTab : true;
@@ -22,7 +22,7 @@ export function OpenSearchDialogButton(props) {
       icon={{ id: searchIcon }}
       title={searchLabel}
       onClick={() => {
-        if (openInNewBrowserTab === "true") {
+        if (openInNewBrowserTab === 'true') {
           var urlRoot = window.location.protocol + '//' + window.location.host;
 
           var windowUrl = urlRoot + '/studio/search#/';
@@ -34,20 +34,27 @@ export function OpenSearchDialogButton(props) {
         } else {
           const openInNewBrowserTab = props.openInNewBrowserTab ? props.openInNewBrowserTab : true;
           let initialParams = props.initialParameters;
-             
-          dispatch(
-            showWidgetDialog({
-              id: 'CannedSearchDialog',
-              title: searchLabel,
+
+          dispatch({
+            type: 'SHOW_WIDGET_DIALOG',
+            payload: {
+              title: 'Pick Video To Clip',
               widget: {
                 id: 'craftercms.components.Search',
                 configuration: {
                   embedded: true,
-                  initialParameters: initialParams
+                  initialParameters: {},
+                  mode: 'select',
+                  onAcceptSelection() {
+                    console.log('onAcceptSelection');
+                  },
+                  onClose() {
+                    console.log('onClose');
+                  }
                 }
               }
-            })
-          );
+            }
+          });
         }
       }}
     />

@@ -6,10 +6,10 @@ const plugin: PluginDescriptor = {
   locales: undefined,
   scripts: undefined,
   stylesheets: undefined,
-  id: 'org.rd.plugin.cannedsearch',
+  id: 'org.rd.plugin.mediaconvertclip',
   widgets: {
-    'org.rd.plugin.cannedsearch.openSearchButton': OpenSearchDialogButton,
-    'org.rd.plugin.cannedsearch.search': SearchDialog
+    'org.rd.plugin.mediaconvertclip.openSearchButton': OpenSearchDialogButton,
+    'org.rd.plugin.mediaconvertclip.search': SearchDialog
   }
 };
 

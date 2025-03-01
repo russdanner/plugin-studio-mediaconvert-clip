@@ -69,7 +69,7 @@ module.exports = {
         // },
         {
           src: './dist/*',
-          dest: '../../../authoring/static-assets/plugins/org/rd/plugin/cannedsearch/apps/cannedsearch'
+          dest: '../../../authoring/static-assets/plugins/org/rd/plugin/mediaconvert-clip/apps/mediaconvert-clip'
         }
       ]
     })
