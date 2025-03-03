@@ -20,6 +20,7 @@ public class MediaConvertService {
 
     def pluginConfig
 
+    def REGION = 'us-east-1'
     def MEDIA_CONVERT_ROLE_ARN = 'arn:aws:iam::xxxxxxxx:role/media-convert-demo'
     def MEDIA_CONVERT_ENDPOINT = 'https://xxxxxxxx.mediaconvert.us-east-1.amazonaws.com'
     def S3_BUCKET = 'aws-video-center-demo'
@@ -40,9 +41,13 @@ public class MediaConvertService {
     def lookupAwsMediaCredentials() {
         def creds = [region: '', apiKey: '', apiSecret: '', endpoint: '']
 
-        creds.region = pluginConfig.getString('awsRegion') ?: 'us-east-1'
+        creds.region = pluginConfig.getString('awsRegion') ?: REGION
         creds.apiKey = pluginConfig.getString('awsApiKey')
         creds.apiSecret = pluginConfig.getString('awsApiSecret')
+        creds.s3Bucket = pluginConfig.getString('awsS3Bucket') ?: S3_BUCKET
+        creds.inputPrefix = pluginConfig.getString('awsInputPrefix') ?: INPUT_PREFIX
+        creds.outputPrefix = pluginConfig.getString('awsOutputPrefix') ?: OUTPUT_PREFIX
+        creds.roleArn = pluginConfig.getString('awsRoleArn') ?: MEDIA_CONVERT_ROLE_ARN
         creds.endpoint = pluginConfig.getString('awsMediaConvertEndpoint') ?: MEDIA_CONVERT_ENDPOINT
 
         return creds
@@ -82,15 +87,20 @@ public class MediaConvertService {
      */
     def createClip(String videoPath, double startTime, double endTime) {
         this.createMediaConvertClient()
+        def creds = this.lookupAwsMediaCredentials()
+        def inputPrefix = creds.inputPrefix
+        def outputPrefix = creds.outputPrefix
+        def s3Bucket = creds.s3Bucket
+        def mediaConvertRoleArn = creds.roleArn
 
-        def inputS3Key = INPUT_PREFIX + videoPath
-        def outputS3Key = OUTPUT_PREFIX + videoPath;
+        def inputS3Key = inputPrefix + videoPath
+        def outputS3Key = outputPrefix + videoPath;
 
         CreateJobRequest jobRequest = CreateJobRequest.builder()
-                .role(MEDIA_CONVERT_ROLE_ARN)
+                .role(mediaConvertRoleArn)
                 .settings(JobSettings.builder()
                         .inputs(Input.builder()
-                                .fileInput("s3://" + S3_BUCKET + "/" + inputS3Key)
+                                .fileInput("s3://" + s3Bucket + "/" + inputS3Key)
                                 .timecodeSource(InputTimecodeSource.EMBEDDED)
                                 .inputClippings(InputClipping.builder()
                                             .startTimecode(formatTimecode(startTime))
@@ -101,7 +111,7 @@ public class MediaConvertService {
                                 .outputGroupSettings(OutputGroupSettings.builder()
                                         .type(OutputGroupType.FILE_GROUP_SETTINGS)
                                         .fileGroupSettings(FileGroupSettings.builder()
-                                                .destination('s3://' + S3_BUCKET + '/' + outputS3Key)
+                                                .destination('s3://' + s3Bucket + '/' + outputS3Key)
                                                 .build())
                                         .build())
                                 .outputs(Output.builder()
