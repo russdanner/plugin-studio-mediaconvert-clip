@@ -138,7 +138,7 @@ var createFetchUrl = function (authoringBase, url) { return "".concat(authoringB
 function createClip(videoPath, startTime, endTime) {
     var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var state, siteId, authoringBase, headers, response;
+        var state, siteId, authoringBase, headers, response, data;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -157,7 +157,13 @@ function createClip(videoPath, startTime, endTime) {
                         })];
                 case 1:
                     response = _b.sent();
-                    return [2 /*return*/, response.json()];
+                    if (response.status !== 200) {
+                        throw new Error('Failed to create clip');
+                    }
+                    return [4 /*yield*/, response.json()];
+                case 2:
+                    data = _b.sent();
+                    return [2 /*return*/, data.result];
             }
         });
     });

@@ -21,5 +21,10 @@ export async function createClip(videoPath: string, startTime: number, endTime: 
       })
     });
 
-    return response.json();
+    if (response.status !== 200) {
+        throw new Error('Failed to create clip');
+    }
+
+    const data = await response.json();
+    return data.result;
   }
