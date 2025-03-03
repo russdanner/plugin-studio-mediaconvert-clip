@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button';
+import DialogBody from '@craftercms/studio-ui/components/DialogBody';
+import DialogFooter from '@craftercms/studio-ui/components/DialogFooter';
+import PrimaryButton from '@craftercms/studio-ui/components/PrimaryButton';
 
 import { createClip } from '../utils';
 
@@ -66,12 +69,8 @@ const ClipDialog = (props: ClipDialogProps) => {
 
   return (
     <React.Fragment>
-        <Box sx={{ width: '100%' }}>
-            <video
-                ref={videoRef}
-                controls
-                style={{ 'margin':'5px', 'width':'98%'}}
-            >
+        <DialogBody>
+            <video ref={videoRef} controls style={{ height: '71.5vh'}}>
                 <source src={`${videoPath}`} type="video/mp4" />
             </video>
             <Slider
@@ -90,19 +89,12 @@ const ClipDialog = (props: ClipDialogProps) => {
                 paddingRight: '5px'
                 }}
             />
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleClip}
-                sx={{
-                    marginTop: '10px',
-                    margintRight: '10px',
-                    float: 'right'
-                }}
-            >
-                    Clip Video
-            </Button>
-        </Box>
+        </DialogBody>
+        <DialogFooter>
+            <PrimaryButton onClick={handleClip}>
+                Clip Video
+            </PrimaryButton>
+        </DialogFooter>
     </React.Fragment>
   )
 }

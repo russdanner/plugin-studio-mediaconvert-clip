@@ -4,9 +4,10 @@ const React__default = craftercms.libs.React && Object.prototype.hasOwnProperty.
 const ToolsPanelListItemButton = craftercms.components.ToolsPanelListItemButton && Object.prototype.hasOwnProperty.call(craftercms.components.ToolsPanelListItemButton, 'default') ? craftercms.components.ToolsPanelListItemButton['default'] : craftercms.components.ToolsPanelListItemButton;
 const { useDispatch } = craftercms.libs.ReactRedux;
 const SearchUI = craftercms.components.SearchUI && Object.prototype.hasOwnProperty.call(craftercms.components.SearchUI, 'default') ? craftercms.components.SearchUI['default'] : craftercms.components.SearchUI;
-const Box = craftercms.libs.MaterialUI.Box && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.Box, 'default') ? craftercms.libs.MaterialUI.Box['default'] : craftercms.libs.MaterialUI.Box;
 const Slider = craftercms.libs.MaterialUI.Slider && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.Slider, 'default') ? craftercms.libs.MaterialUI.Slider['default'] : craftercms.libs.MaterialUI.Slider;
-const Button = craftercms.libs.MaterialUI.Button && Object.prototype.hasOwnProperty.call(craftercms.libs.MaterialUI.Button, 'default') ? craftercms.libs.MaterialUI.Button['default'] : craftercms.libs.MaterialUI.Button;
+const DialogBody = craftercms.components.DialogBody && Object.prototype.hasOwnProperty.call(craftercms.components.DialogBody, 'default') ? craftercms.components.DialogBody['default'] : craftercms.components.DialogBody;
+const DialogFooter = craftercms.components.DialogFooter && Object.prototype.hasOwnProperty.call(craftercms.components.DialogFooter, 'default') ? craftercms.components.DialogFooter['default'] : craftercms.components.DialogFooter;
+const PrimaryButton = craftercms.components.PrimaryButton && Object.prototype.hasOwnProperty.call(craftercms.components.PrimaryButton, 'default') ? craftercms.components.PrimaryButton['default'] : craftercms.components.PrimaryButton;
 const { getGlobalHeaders } = craftercms.utils.ajax;
 
 function OpenSearchDialogButton(props) {
@@ -222,20 +223,17 @@ var ClipDialog = function (props) {
         });
     }); };
     return (React__default.createElement(React__default.Fragment, null,
-        React__default.createElement(Box, { sx: { width: '100%' } },
-            React__default.createElement("video", { ref: videoRef, controls: true, style: { 'margin': '5px', 'width': '98%' } },
+        React__default.createElement(DialogBody, null,
+            React__default.createElement("video", { ref: videoRef, controls: true, style: { height: '71.5vh' } },
                 React__default.createElement("source", { src: "".concat(videoPath), type: "video/mp4" })),
             React__default.createElement(Slider, { getAriaLabel: function () { return 'Temperature range'; }, min: 0, max: duration, value: value, marks: marks, onChange: handleChange, valueLabelDisplay: "auto", getAriaValueText: valuetext, style: {
                     margin: '5px',
                     width: '98%',
                     paddingLeft: '5px',
                     paddingRight: '5px'
-                } }),
-            React__default.createElement(Button, { variant: "contained", color: "primary", onClick: handleClip, sx: {
-                    marginTop: '10px',
-                    margintRight: '10px',
-                    float: 'right'
-                } }, "Clip Video"))));
+                } })),
+        React__default.createElement(DialogFooter, null,
+            React__default.createElement(PrimaryButton, { onClick: handleClip }, "Clip Video"))));
 };
 
 var plugin = {
