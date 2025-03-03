@@ -22,7 +22,7 @@ export function OpenSearchDialogButton(props) {
       icon={{ id: searchIcon }}
       title={searchLabel}
       onClick={() => {
-        
+
           const openInNewBrowserTab = props.openInNewBrowserTab ? props.openInNewBrowserTab : true;
           let initialParams = props.initialParameters;
 
@@ -35,10 +35,10 @@ export function OpenSearchDialogButton(props) {
                 configuration: {
                   embedded: true,
                   initialParameters: {
-                    "content-type": "/component/video-on-demand"                    
+                    "content-type": "/component/video-on-demand"
                   },
                   mode: 'select',
-                  onAcceptSelection() {
+                  onAcceptSelection(selectedItems) {
 
                     dispatch({
                       type: 'SHOW_WIDGET_DIALOG',
@@ -52,11 +52,12 @@ export function OpenSearchDialogButton(props) {
                             mode: 'select',
                             onClose() {
                               console.log('onClose');
-                            }
+                            },
+                            selectedItems
                           }
                         }
                       }
-                    });                    
+                    });
 
                   },
                   onClose() {
@@ -66,7 +67,7 @@ export function OpenSearchDialogButton(props) {
               }
             }
           });
-        
+
       }}
     />
   );

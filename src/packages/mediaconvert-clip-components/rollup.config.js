@@ -15,7 +15,7 @@ const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 const globals = {
   react: 'craftercms.libs.React',
   rxjs: 'craftercms.libs.rxjs',
-  react: 'craftercms.libs.React',  
+  react: 'craftercms.libs.React',
   '@emotion/css/create-instance': 'craftercms.libs.createEmotion',
   'react-dom': 'craftercms.libs.ReactDOM',
   'react-intl': 'craftercms.libs.ReactIntl',
@@ -47,7 +47,7 @@ module.exports = {
   external: Object.keys(globals).concat(Object.keys(replacementRegExps).map((str) => new RegExp(str))),
   plugins: [
     json(),
-    postcss({ extract: true }), 
+    postcss({ extract: true }),
     replace({
       preventAssignment: true,
       'process.env.NODE_ENV': JSON.stringify('production')
@@ -72,7 +72,7 @@ module.exports = {
         // },
         {
           src: './dist/*',
-          dest: '../../../authoring/static-assets/plugins/org/rd/plugin/mediaconvert-clip/apps/mediaconvert-clip'
+          dest: '../../../authoring/static-assets/plugins/org/rd/plugin/mediaconvertclip/apps/mediaconvert-clip'
         }
       ]
     })
