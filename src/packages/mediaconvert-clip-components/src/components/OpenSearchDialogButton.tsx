@@ -22,31 +22,42 @@ export function OpenSearchDialogButton(props) {
       icon={{ id: searchIcon }}
       title={searchLabel}
       onClick={() => {
-        if (openInNewBrowserTab === 'true') {
-          var urlRoot = window.location.protocol + '//' + window.location.host;
-
-          var windowUrl = urlRoot + '/studio/search#/';
-
-          if (searchParams != '') {
-            windowUrl += '?' + searchParams;
-          }
-          window.open(windowUrl, '_studioSearch');
-        } else {
+        
           const openInNewBrowserTab = props.openInNewBrowserTab ? props.openInNewBrowserTab : true;
           let initialParams = props.initialParameters;
 
           dispatch({
             type: 'SHOW_WIDGET_DIALOG',
             payload: {
-              title: 'Pick Video To Clip',
+              title: 'Clip Video',
               widget: {
                 id: 'craftercms.components.Search',
                 configuration: {
                   embedded: true,
-                  initialParameters: {},
+                  initialParameters: {
+                    "content-type": "/component/video-on-demand"                    
+                  },
                   mode: 'select',
                   onAcceptSelection() {
-                    console.log('onAcceptSelection');
+
+                    dispatch({
+                      type: 'SHOW_WIDGET_DIALOG',
+                      payload: {
+                        title: 'Clip Video',
+                        widget: {
+                          id: 'org.rd.plugin.mediaconvertclip.clip',
+                          configuration: {
+                            embedded: true,
+                            initialParameters: {},
+                            mode: 'select',
+                            onClose() {
+                              console.log('onClose');
+                            }
+                          }
+                        }
+                      }
+                    });                    
+
                   },
                   onClose() {
                     console.log('onClose');
@@ -55,7 +66,7 @@ export function OpenSearchDialogButton(props) {
               }
             }
           });
-        }
+        
       }}
     />
   );

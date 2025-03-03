@@ -1,3 +1,4 @@
+
 const typescript = require('rollup-plugin-typescript2');
 //const commonjs = require('@rollup/plugin-commonjs');
 const resolve = require('@rollup/plugin-node-resolve');
@@ -5,6 +6,7 @@ const replaceImportsWithVars = require('rollup-plugin-replace-imports-with-vars'
 const json = require('@rollup/plugin-json');
 const pkg = require('./package.json');
 const copy = require('rollup-plugin-copy');
+const postcss = require('rollup-plugin-postcss');
 const { terser } = require('rollup-plugin-terser');
 const replace = require('@rollup/plugin-replace');
 
@@ -45,6 +47,7 @@ module.exports = {
   external: Object.keys(globals).concat(Object.keys(replacementRegExps).map((str) => new RegExp(str))),
   plugins: [
     json(),
+    postcss({ extract: true }), 
     replace({
       preventAssignment: true,
       'process.env.NODE_ENV': JSON.stringify('production')
