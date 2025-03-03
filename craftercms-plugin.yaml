@@ -6,7 +6,7 @@ descriptorVersion: 2
 # Describe the plugin
 plugin:
   type: site
-  id: org.rd.plugin.cannedsearch
+  id: org.rd.plugin.mediaconvertclip
   name: Studio Canned Search Plugin
   tags:
     - workflow
@@ -14,16 +14,16 @@ plugin:
     major: 1
     minor: 0
     patch: 1
-  description: A plugin to provide a quick link from the sidebar to pre-configured searches 
+  description: A plugin to provide a quick link from the sidebar to pre-configured searches
   documentation: "https://raw.githubusercontent.com/russdanner/plugin-studio-cannedsearch/master/README.md"
   website:
     name: Studio Canned Search Plugin
-    url: https://github.com/russdanner/plugin-studio-cannedsearch
+    url: https://github.com/russdanner/plugin-studio-mediaconvert-clip
   media:
     screenshots:
       - title: CrafterCMS
         description: Studio Canned Search
-        url: "https://raw.githubusercontent.com/russdanner/plugin-studio-cannedsearch/master/.crafter/logo.png"
+        url: "https://raw.githubusercontent.com/russdanner/plugin-studio-mediaconvert-clip/master/.crafter/logo.png"
   developer:
     company:
       name: Russ Danner
@@ -53,23 +53,23 @@ plugin:
     - enterprise
   installation:
     - type: preview-app
-      elementXpath: //widget[@id='org.rd.plugin.cannedsearch.openSearchButton']
+      elementXpath: //widget[@id='org.rd.plugin.mediaconvertclip.openSearchButton']
       parentXpath: //widget[@id='craftercms.components.ToolsPanel']/configuration/widgets
       element:
         name: widget
         attributes:
           - name: id
-            value: org.rd.plugin.cannedsearch.openSearchButton
+            value: org.rd.plugin.mediaconvertclip.openSearchButton
         children:
           - name: plugin
             attributes:
               - name: id
-                value: org.rd.plugin.cannedsearch
+                value: org.rd.plugin.mediaconvertclip
               - name: site
                 value: "{site}"
               - name: type
                 value: apps
               - name: name
-                value: cannedsearch
+                value: mediaconvertclip
               - name: file
                 value: index.js
