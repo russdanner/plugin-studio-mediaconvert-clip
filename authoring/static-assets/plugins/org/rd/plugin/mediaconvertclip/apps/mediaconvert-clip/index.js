@@ -8,6 +8,7 @@ const Slider = craftercms.libs.MaterialUI.Slider && Object.prototype.hasOwnPrope
 const DialogBody = craftercms.components.DialogBody && Object.prototype.hasOwnProperty.call(craftercms.components.DialogBody, 'default') ? craftercms.components.DialogBody['default'] : craftercms.components.DialogBody;
 const DialogFooter = craftercms.components.DialogFooter && Object.prototype.hasOwnProperty.call(craftercms.components.DialogFooter, 'default') ? craftercms.components.DialogFooter['default'] : craftercms.components.DialogFooter;
 const PrimaryButton = craftercms.components.PrimaryButton && Object.prototype.hasOwnProperty.call(craftercms.components.PrimaryButton, 'default') ? craftercms.components.PrimaryButton['default'] : craftercms.components.PrimaryButton;
+const { createAction } = craftercms.libs.ReduxToolkit;
 const { getGlobalHeaders } = craftercms.utils.ajax;
 
 function OpenSearchDialogButton(props) {
@@ -134,6 +135,23 @@ function SearchDialog(props) {
     return React__default.createElement(SearchUI, __assign({}, searchUIProps));
 }
 
+/*
+ * Copyright (C) 2007-2022 Crafter Software Corporation. All Rights Reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License version 3 as published by
+ * the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+const showSystemNotification = /*#__PURE__*/ createAction('SHOW_SYSTEM_NOTIFICATION');
+
 var pluginBaseUrl = '/api/2/plugin/script/plugins/org/rd/plugin/mediaconvertclip';
 var createFetchUrl = function (authoringBase, url) { return "".concat(authoringBase).concat(pluginBaseUrl, "/").concat(url); };
 function createClip(videoPath, startTime, endTime) {
@@ -171,9 +189,11 @@ function createClip(videoPath, startTime, endTime) {
 }
 
 var ClipDialog = function (props) {
-    var _a = React__default.useState([0, 0]), value = _a[0], setValue = _a[1];
-    var _b = useState(0), duration = _b[0], setDuration = _b[1];
-    var _c = useState([]), marks = _c[0], setMarks = _c[1];
+    var dispatch = useDispatch();
+    var _a = useState(false), isSubmitting = _a[0], setIsSubmitting = _a[1];
+    var _b = useState([0, 0]), value = _b[0], setValue = _b[1];
+    var _c = useState(0), duration = _c[0], setDuration = _c[1];
+    var _d = useState([]), marks = _d[0], setMarks = _d[1];
     var videoRef = useRef(null);
     var selectedItems = props.selectedItems;
     var videoPath = selectedItems[0];
@@ -211,14 +231,39 @@ var ClipDialog = function (props) {
         setValue(newValue);
     };
     var handleClip = function () { return __awaiter(void 0, void 0, void 0, function () {
-        var response;
+        var response, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, createClip(videoPath, value[0], value[1])];
+                case 0:
+                    setIsSubmitting(true);
+                    _a.label = 1;
                 case 1:
+                    _a.trys.push([1, 3, 4, 5]);
+                    return [4 /*yield*/, createClip(videoPath, value[0], value[1])];
+                case 2:
                     response = _a.sent();
-                    alert(response ? "MediaConvert job id: ".concat(response) : 'Clip failed');
-                    return [2 /*return*/];
+                    if (response) {
+                        dispatch(showSystemNotification({
+                            message: "MediaConvert job id: ".concat(response)
+                        }));
+                    }
+                    else {
+                        dispatch(showSystemNotification({
+                            message: 'Clip failed'
+                        }));
+                    }
+                    return [3 /*break*/, 5];
+                case 3:
+                    error_1 = _a.sent();
+                    console.error(error_1);
+                    dispatch(showSystemNotification({
+                        message: 'Clip failed'
+                    }));
+                    return [3 /*break*/, 5];
+                case 4:
+                    setIsSubmitting(false);
+                    return [7 /*endfinally*/];
+                case 5: return [2 /*return*/];
             }
         });
     }); };
@@ -233,7 +278,7 @@ var ClipDialog = function (props) {
                     paddingRight: '5px'
                 } })),
         React__default.createElement(DialogFooter, null,
-            React__default.createElement(PrimaryButton, { onClick: handleClip }, "Clip Video"))));
+            React__default.createElement(PrimaryButton, { onClick: handleClip, loading: isSubmitting }, "Clip Video"))));
 };
 
 var plugin = {

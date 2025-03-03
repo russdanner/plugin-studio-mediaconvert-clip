@@ -5,6 +5,8 @@ import Button from '@mui/material/Button';
 import DialogBody from '@craftercms/studio-ui/components/DialogBody';
 import DialogFooter from '@craftercms/studio-ui/components/DialogFooter';
 import PrimaryButton from '@craftercms/studio-ui/components/PrimaryButton';
+import { showSystemNotification } from '@craftercms/studio-ui/state/actions/system';
+import { useDispatch } from 'react-redux';
 
 import { createClip } from '../utils';
 
@@ -15,7 +17,10 @@ export interface ClipDialogProps {
 
 const ClipDialog = (props: ClipDialogProps) => {
 
-    const [value, setValue] = React.useState<number[]>([0, 0]);
+    const dispatch = useDispatch();
+
+    const [ isSubmitting, setIsSubmitting ] = useState(false);
+    const [value, setValue] = useState<number[]>([0, 0]);
     const [duration, setDuration] = useState(0);
     const [marks, setMarks] = useState([]);
     const videoRef = useRef(null);
@@ -62,8 +67,32 @@ const ClipDialog = (props: ClipDialogProps) => {
     };
 
     const handleClip = async () => {
-        const response = await createClip(videoPath, value[0], value[1]);
-        alert(response ? `MediaConvert job id: ${response}` : 'Clip failed');
+        setIsSubmitting(true);
+        try {
+            const response = await createClip(videoPath, value[0], value[1]);
+            if (response) {
+                dispatch(
+                    showSystemNotification({
+                        message: `MediaConvert job id: ${response}`
+                    })
+                );
+            } else {
+                dispatch(
+                    showSystemNotification({
+                        message: 'Clip failed'
+                    })
+                );
+            }
+        } catch (error) {
+            console.error(error);
+            dispatch(
+                showSystemNotification({
+                    message: 'Clip failed'
+                })
+            );
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
 
@@ -91,7 +120,10 @@ const ClipDialog = (props: ClipDialogProps) => {
             />
         </DialogBody>
         <DialogFooter>
-            <PrimaryButton onClick={handleClip}>
+            <PrimaryButton
+                onClick={handleClip}
+                loading={isSubmitting}
+            >
                 Clip Video
             </PrimaryButton>
         </DialogFooter>
