@@ -33,7 +33,9 @@ function OpenSearchDialogButton(props) {
                         configuration: {
                             embedded: true,
                             initialParameters: {
-                                "content-type": "/component/video-on-demand"
+                                filters: {
+                                    "mime-type": ["video/mp4"]
+                                }
                             },
                             mode: 'select',
                             onAcceptSelection: function (selectedItems) {
